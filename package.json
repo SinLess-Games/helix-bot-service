@@ -1,7 +1,24 @@
 {
-  "name": "helix-bot-service",
+  "name": "helix-discord-bot",
   "version": "1.0.0",
+  "main": "index.js",
+  "license": "GNUv3",
   "dependencies": {
-    
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.1.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.12"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "dev": "nodemon ./src/index.ts",
+    "start": "node ./build/index.js",
+    "build": "tsc"
   }
 }
