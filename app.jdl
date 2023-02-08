@@ -1,0 +1,428 @@
+//-------------------------------------//
+//          Database Schemas           //
+//-------------------------------------//
+//     Created By: SinLess Games LLC
+//     Date: 10/10/2020
+//     Version: 1.0.0
+//-------------------------------------//
+//          Discord Bot Schema         //
+//-------------------------------------//
+
+
+entity Server {
+	Id Integer unique required
+    
+   	// Data From Discord
+    ServerId Integer unique required
+    ServerName String
+    AfkChannel String
+    AfkTimeout Integer
+    Available Boolean
+    Banner String
+    CreatedAt LocalDate
+    Description String
+    DiscoverySplash String
+    Features Blob
+    Icon String
+    JoinedAt LocalDate
+    Large Boolean default False
+    MaxBitrate Integer
+  	MaxMembers Integer
+    MaxPresences Integer
+    MaxVideoChannelUsers Integer
+    MFA Integer
+    NSFWLevel Integer
+    OwnerId String
+    Partnered Boolean default False
+    PreferredLocale String
+    PremiumProgressBarEnabled Boolean default False
+    PremiumSubscriptionCount Integer
+    PremiumTier Integer
+    RulesChannelId String
+    ShardId Integer
+    Splash String
+    SystemChannelId String
+    VanityUrl String
+    VanityUses Integer
+    VerificationLevel Integer
+    Verified Boolean
+    
+}
+
+entity Webhook {
+    // Webhook Model
+	Id Integer unique required
+    ChannelId Integer unique required
+    Token String unique required
+}
+
+// Stats
+entity ServerStats {
+  // Server Stats Model
+  Id Integer unique required
+}
+
+entity AnnualStats {
+	Id Integer unique required
+}
+
+entity MonthlyStats {
+	Id Integer unique required
+}
+
+entity WeeklyStats {
+	Id Integer unique required 
+}
+
+entity DailyStats {
+	Id Integer unique required
+    Channels Integer 
+    Members Integer
+    MemberJoins Integer
+    MemberLeaves Integer
+    PresenceCount Integer
+}
+
+//----------------------------------------------------------------------------------------------------//
+//                                     Discord Server Config                                          //
+//----------------------------------------------------------------------------------------------------//
+// The discord server config  has several things that can be configured                               //
+// 1. Server Specific - These are things that are specific to the server                              //
+// 2. Discord Modules - These are the modules that are enabled for the server                         //
+//    2.1 Automatic Modules - These are the modules that are automatically enabled for the server     //
+//    2.2 Moderation Modules - These are the modules that are enabled for the server                  //
+//    2.3 Management Modules - These are the modules that are enabled for the server                  //
+//    2.4 Integration Modules - These are the modules that are enabled for the server                 //
+//    2.5 Special Modules - These are the modules that are enabled for the server                     //
+//    2.6 Voice Modules - These are the modules that are enabled for the server                       //
+//----------------------------------------------------------------------------------------------------//
+
+entity ServerConfig {
+	Id Integer unique required
+    // Server Specific 
+    ServerID Integer
+    Prefix String required
+    DateCreated LocalDate
+}
+
+//---------------------------//
+//      Discord Modules      //
+//---------------------------//
+
+entity AutoModules {
+    // 8 Automatic Modules
+	Id Integer unique required
+    ActionLogs Boolean default False
+    AutoAnnouncement Boolean default False
+    AutoDelete Boolean default False
+    AutoMessage Boolean default False
+    AutoMod Boolean default False
+    AutoPurge Boolean default False
+    AutoResponder Boolean default False
+    AutoRole Boolean default False
+}
+
+entity ModerationModules {
+    // 8 Moderation Modules
+	Id Integer unique required
+    AFK Boolean default False
+    LeaveMessages Boolean default False
+    Moderation Boolean default True
+    ReactRoles Boolean default False
+    Suggestions Boolean default True
+    Tickets Boolean default True
+    VoiceChatModeration Boolean default True
+    WelcomeMessages Boolean default False
+}
+
+entity ManagementModules {
+    // 5 Management Modules
+	Id Integer unique required
+    RaidDetection Boolean default False
+    RaidLockdown Boolean default False
+    SlowMode Boolean default False
+    StarBoard Boolean default False
+    Stats Boolean default True
+}
+
+entity IntegrationModules {
+    // 10 Integration Modules
+	Id Integer unique required
+    GitHub Boolean default False
+    Google Boolean default False
+    MineCraft Boolean default False
+    Patreon Boolean default False
+    Reddit Boolean default False
+    Roblox Boolean default False
+    StackOverflow Boolean default False
+    StreamLabsOBS Boolean default False
+    Twitch Boolean default False
+    YouTube Boolean default False
+}
+
+entity SpecialModules {
+    // 9 Special Modules
+	Id Integer unique required
+    CustomCommandsEnabled Boolean default False
+    EmperiaRpSystem Boolean default False
+    GPT3 Boolean default False
+    GiveAway Boolean default False
+    Highlights Boolean default False
+    Music Boolean default True
+    PersonalAssistant Boolean default False
+    Tags Boolean default False
+    Tuppers Boolean default True
+}
+
+entity VoiceModules {
+    // 3 Voice Modules
+	Id Integer unique required
+    VoiceChatGames Boolean default False
+	VoiceCommands Boolean default False
+	VoiceTextLinking Boolean default False
+}
+
+entity Invite {
+	Id Integer unique required
+    Code String
+    Url String
+}
+
+entity BlackListConfig {
+	Id Integer unique required
+    IsChannel Boolean default False
+    BlockProxies Boolean default False
+    BlockCommands Boolean default False
+}
+
+entity BlackList {
+	Id Integer unique required
+    BlackList String 
+}
+
+entity GlobalBlackList {
+	Id Integer unique required
+    UserId Integer unique required
+}
+entity Groups {
+	Id Integer unique required
+    Name String required
+    Description String
+    Tag String
+}
+
+entity Members {
+	Id Integer unique required
+    Name String required
+    Position Integer
+    AvatarUrl String
+    Brackets String
+    Posts Integer
+    ShowBrackets Boolean default False
+    Birthday String
+    Description String
+    Tag String
+    GroupId Integer
+}
+
+//---------------------------//
+//      Payment Service      //
+//---------------------------//
+
+entity Card {
+	Id Integer unique required
+    CardNumber Integer unique required
+    NameOnCard String required
+    ExpirationMonth ExpirationMonth required
+}
+
+entity PaymentMethod {
+	Id Integer unique required
+    PaymentType PaymentType
+    PaymentDue LocalDate
+    PaymentMade LocalDate
+    
+}
+
+entity ExpirationYear {
+	Id Integer unique required
+	Year Integer unique required
+}
+
+// ENUMS
+
+enum PaymentType {
+  Visa
+  MasterCard
+  AmericanExpress
+  Discover
+  PayPal
+  stripe
+}
+
+enum ExpirationMonth {
+  Jan
+  Feb
+  Mar
+  Apr
+  Jun
+  Jul
+  Aug
+  Sep
+  Oct
+  Nov
+  Dec
+}
+
+//-----------------//
+//      Payment    //
+//-----------------//
+
+entity Product {
+    Id Integer unique required
+    Name String required
+    Description String
+    Price Integer
+    ImageUrl String
+    ProductType ProductType
+}
+
+entity ProductCategory {
+    Id Integer unique required
+    Name String required
+    Description String
+    ImageUrl String
+}
+
+enum ProductType {
+    Subscription
+    Product
+}
+
+//-----------------//
+//      USERS      //
+//-----------------//
+
+entity DiscordUser {
+  // discord User Model
+  Id Integer unique required
+  DiscordId Integer unique required
+  UserName String required
+  Discriminator String required
+  Avatar String
+  System Boolean default False
+  MfaEnabled Boolean default False
+  Banner String
+  AccentColor Integer
+  Locale String
+  Verified Boolean
+  Email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+  Flags Integer
+  PremiumType Integer
+  PublicFlags Integer
+  AccountCreatedAt LocalDate
+  DefaultAvatarUrl String
+  Tag String
+  DmMessages Boolean default True
+  CreatedAt LocalDate
+  UpdatedAt LocalDate
+}
+
+entity Bots {
+    // discord Bot User Model
+  Id Integer
+  DiscordId Integer unique required
+  UserName String required
+  Discriminator String required
+  Avatar String
+  System Boolean default False
+  MfaEnabled Boolean default False
+  Banner String
+  AccentColor Integer
+  Locale String
+  Verified Boolean
+  Email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+  Flags Integer
+  PremiumType Integer
+  PublicFlags Integer
+  AccountCreatedAt LocalDate
+  DefaultAvatarUrl String
+  Tag String
+  // bot specific
+  DmMessages Boolean default True
+  CreatedAt LocalDate
+  UpdatedAt LocalDate
+}
+
+entity Roles {
+    // User Role Model
+	Id Integer unique required
+    Name String required
+    Permissions Integer
+}
+
+entity SinlessUser {
+  // Sinless User Model
+  Id Integer unique required
+  UUID Integer unique required
+  UserName String required
+  Email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
+  Password String
+  Active Boolean default False
+  InactiveSince LocalDate
+  Newsletter Boolean default False
+
+  CreatedAt LocalDate
+  UpdatedAt LocalDate
+
+
+}
+
+//-------------------------//
+//      Relationships      //
+//-------------------------//
+
+relationship OneToOne {
+	ServerConfig to ServerStats
+    Server to ServerConfig
+    ExpirationYear to Card
+    Card to PaymentMethod
+    SinlessUser to DiscordUser
+    BlackList to BlackListConfig
+    Members to Groups
+    SinlessUser to Roles
+}
+
+relationship ManyToMany {
+	DiscordUser to Server
+}
+
+relationship OneToMany {
+	AnnualStats to ServerStats
+    SinlessUser to PaymentMethod
+    ServerConfig to Invite
+    DiscordUser to PaymentMethod
+    Product to ProductCategory
+    DiscordUser to Product
+    SinlessUser to Product
+    ServerConfig to Webhook
+    ServerConfig to GlobalBlackList
+}
+
+relationship ManyToOne {
+	/**  7 DailyStats to one WeeklyStats */
+	DailyStats to WeeklyStats
+    /** 4 Weekly Stats to one MonthlyStats */
+    WeeklyStats to MonthlyStats
+    /** 12 Weekly Stats to one AnnulStats */
+    MonthlyStats to AnnualStats
+
+    ServerConfig to AutoModules
+    ServerConfig to ModerationModules
+    ServerConfig to ManagementModules
+    ServerConfig to IntegrationModules
+    ServerConfig to SpecialModules
+    ServerConfig to VoiceModules
+    ServerConfig to BlackListConfig
+    DiscordUser to Members
+}
